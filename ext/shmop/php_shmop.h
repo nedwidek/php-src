@@ -31,6 +31,7 @@ PHP_FUNCTION(shmop_open);
 PHP_FUNCTION(shmop_read);
 PHP_FUNCTION(shmop_close);
 PHP_FUNCTION(shmop_size);
+PHP_FUNCTION(shmop_sys_shmid);
 PHP_FUNCTION(shmop_write);
 PHP_FUNCTION(shmop_delete);
 

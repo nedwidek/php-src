@@ -67,6 +67,10 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_shmop_size, 0, 0, 1)
 	ZEND_ARG_INFO(0, shmid)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_INFO_EX(arginfo_shmop_sys_shmid, 0, 0, 1)
+	ZEND_ARG_INFO(0, shmid)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_INFO_EX(arginfo_shmop_write, 0, 0, 3)
 	ZEND_ARG_INFO(0, shmid)
 	ZEND_ARG_INFO(0, data)
@@ -85,6 +89,7 @@ const zend_function_entry shmop_functions[] = {
 	PHP_FE(shmop_read, 		arginfo_shmop_read)
 	PHP_FE(shmop_close, 	arginfo_shmop_close)
 	PHP_FE(shmop_size, 		arginfo_shmop_size)
+    PHP_FE(shmop_sys_shmid, arginfo_shmop_sys_shmid)
 	PHP_FE(shmop_write, 	arginfo_shmop_write)
 	PHP_FE(shmop_delete, 	arginfo_shmop_delete)
 	PHP_FE_END
@@ -307,6 +312,21 @@ PHP_FUNCTION(shmop_size)
 	RETURN_LONG(shmop->size);
 }
 /* }}} */
+
+PHP_FUNCTION(shmop_sys_shmid)
+{
+    long shmid;
+	struct php_shmop *shmop;
+	int type;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "l", &shmid) == FAILURE) {
+		return;
+	}
+
+	PHP_SHMOP_GET_RES
+
+	RETURN_LONG(shmop->shmid);
+}
 
 /* {{{ proto int shmop_write (int shmid, string data, int offset)
    writes to a shared memory segment */
